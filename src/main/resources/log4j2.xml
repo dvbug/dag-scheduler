@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+    <properties>
+        <property name="PROJECT_NAME">dag-scheduler</property>
+        <property name="LOG_FORMAT">%style{%d{DEFAULT}}{bright,white} %highlight{%-5p} [%style{%t}{bright,blue}] [%style{%c{1.}}{bright,yellow}] %style{%m}{cyan}%n</property>
+<!--        <property name="LOG_FORMAT">%d{DEFAULT} %highlight{%-5p} [%X{trace-id}] [%t] [%c{1.}] %X{log-type}%m%n</property>-->
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+        </Console>
+    </appenders>
+    <loggers>
+        <root level="warn">
+            <appender-ref ref="Console"/>
+        </root>
+        <logger name="com.dvbug" level="trace" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+    </loggers>
+</configuration>
