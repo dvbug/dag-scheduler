@@ -5,6 +5,7 @@ import lombok.ToString;
 
 /**
  * DAG节点执行结果
+ *
  * @param <R> 结果类型
  */
 @Getter
@@ -12,11 +13,13 @@ import lombok.ToString;
 public class ExecuteResult<R> {
     private final R result;
     private final DagNodeInfo info;
+    private final TraceInfo trace;
     private final Throwable throwable;
 
-    public ExecuteResult(DagNodeInfo info, R result) {
+    public ExecuteResult(DagNodeInfo info, TraceInfo trace, R result) {
         this.info = info;
-        if(result instanceof Throwable) {
+        this.trace = trace;
+        if (result instanceof Throwable) {
             this.result = null;
             this.throwable = (Throwable) result;
         } else {
@@ -25,9 +28,10 @@ public class ExecuteResult<R> {
         }
     }
 
-    public ExecuteResult(DagNodeInfo info, Throwable throwable) {
+    public ExecuteResult(DagNodeInfo info, TraceInfo trace, Throwable throwable) {
         this.result = null;
         this.info = info;
+        this.trace = trace;
         this.throwable = throwable;
     }
 

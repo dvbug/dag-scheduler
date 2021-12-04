@@ -1,47 +1,49 @@
 package com.dvbug.dag;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter(AccessLevel.PRIVATE)
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class TraceInfo {
-    private long createdTime;
-    private long startedTime;
-    private long runningTime;
-    private long completedTime;
-    private boolean completed;
-    private DagNodeState finalState = DagNodeState.CREATED;
+    private final Map<DagNodeState, Long> stateChangedTimeMap = new HashMap<>();
+    @Getter
+    private DagNodeState finalState;
+    @Getter
+    private final List<DagNode<? extends NodeBean>> failedDepends = new ArrayList<>();
 
-    public TraceInfo(long createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public void setFinalState(DagNodeState finalState) {
-        this.finalState = finalState;
-        update();
-    }
-
-    private void update() {
-        switch (finalState) {
-            case START:
-                setStartedTime(System.currentTimeMillis());
-                break;
-            case FAILED:
-            case SUCCESS:
-                setCompleted(true);
-                setCompletedTime(System.currentTimeMillis());
-                break;
-            case RUNNING:
-                setRunningTime(System.currentTimeMillis());
-                break;
+    public TraceInfo() {
+        for (DagNodeState state : DagNodeState.values()) {
+            stateChangedTimeMap.put(state, 0L);
         }
     }
+
+    public void setFinalState(DagNodeState state) {
+        this.finalState = state;
+        stateChangedTimeMap.replace(state, System.currentTimeMillis());
+    }
+
+    public boolean isCompleted() {
+        return DagNodeStateTransition.isFinalState(finalState);
+    }
+
+    public long getStateTime(DagNodeState state) {
+        return stateChangedTimeMap.get(state);
+    }
+
     @Override
     public String toString() {
-        return String.format("%s[createdT=%s,startedT=%s,runningT=%s,completedT=%s,completed=%s,state=%s]",
-                TraceInfo.class.getSimpleName(),
-                createdTime, startedTime, runningTime, completedTime, completed, finalState.toString());
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.getClass().getSimpleName()).append("[");
+        stateChangedTimeMap.forEach(((state, ts) -> {
+            builder.append(state.toString().toLowerCase()).append("T=").append(ts).append(",");
+        }));
+        builder.append("state=").append(finalState.toString()).append(",");
+        builder.append("failedDepends=[").append(failedDepends.stream().map(n -> n.getInfo().getName()).collect(Collectors.joining(","))).append("]");
+        builder.append("]");
+        return builder.toString();
     }
 }

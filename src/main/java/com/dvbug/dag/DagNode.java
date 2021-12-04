@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
+import static com.dvbug.dag.DagNodeStateTransition.*;
 import static java.lang.Thread.sleep;
 
 /**
@@ -21,6 +22,8 @@ public class DagNode<T extends NodeBean> implements Executor {
     private final DagNodeInfo info;
     private final TraceInfo trace;
     private final T bean;
+    @Setter(AccessLevel.MODULE)
+    private DagMode mode;
     private DagNodeState state;
     @Setter(AccessLevel.MODULE)
     private int expectDependCount;
@@ -40,8 +43,8 @@ public class DagNode<T extends NodeBean> implements Executor {
                 String.format("%s-%s", System.currentTimeMillis(), bean.hashCode()),
                 String.format("node-%s", bean.getName()),
                 timeout);
-        this.trace = new TraceInfo(System.currentTimeMillis());
-        this.state = DagNodeState.CREATED;
+        this.trace = new TraceInfo();
+        setState(DagNodeState.CREATED);
         onAfterInit();
     }
 
@@ -55,34 +58,48 @@ public class DagNode<T extends NodeBean> implements Executor {
     }
 
     private void setState(DagNodeState state) {
-        if (this.state.equals(state)) {
+        if (null != this.state && this.state.equals(state)) {
             return;
         }
         DagNodeState oldState = this.state;
-        if (!DagNodeStateTransition.transAllow(oldState, state)) {
+        if (!transAllow(oldState, state)) {
             return;
         }
         this.state = state;
-        this.getTrace().setFinalState(state);
+        getTrace().setFinalState(state);
         if (null != stateChange) {
-            stateChange.changed(oldState, state, this.info);
+            stateChange.changed(oldState, state, info);
         }
     }
 
     @Override
     public final boolean execute(ExecuteCallback callback) {
-        log.debug("{} is start", this);
-        onBeforeExecute();
+        log.debug("{} is start schedule", this);
 
+        onBeforeExecute();
         setState(DagNodeState.START);
 
+        boolean nodeExecuteOk = true;
         long expired = 0;
-        while (canWaiting(expired)) {
+        while (maybeCanRunning(expired)) {
             printParamsCount();
-            if (bean.getParamCount() >= expectDependCount && bean.executeAble()) {
+            if (canRunningInMode()) {
                 setState(DagNodeState.RUNNING);
+                if (bean.execute()) {
+                    setState(DagNodeState.SUCCESS);
+                    callback.onCompleted(new ExecuteResult<>(info, trace, bean.getResult()));
+                } else {
+                    setState(DagNodeState.FAILED);
+                    callback.onCompleted(new ExecuteResult<>(info, trace, bean.getThrowable()));
+                }
                 break;
             } else {
+                if (canIneffectiveInMode()) {
+                    setState(DagNodeState.INEFFECTIVE);
+                    callback.onCompleted(new ExecuteResult<>(info, trace, new IllegalStateException(String.format("%s node ineffective", info.getName()))));
+                    break;
+                }
+
                 try {
                     setState(DagNodeState.WAITING);
                     sleep(1);
@@ -90,40 +107,42 @@ public class DagNode<T extends NodeBean> implements Executor {
                     setState(DagNodeState.FAILED);
                     e.printStackTrace();
                     nodeThrowable = e;
-                    callback.onCompleted(new ExecuteResult<>(this.info, e));
+                    callback.onCompleted(new ExecuteResult<>(info, trace, e));
                     onCompleteExecute();
-                    return false;
+                    nodeExecuteOk = false;
+                    break;
                 }
             }
-            expired = System.currentTimeMillis() - getTrace().getStartedTime();
+            expired = System.currentTimeMillis() - getTrace().getStateTime(DagNodeState.START);
         }
 
-        boolean nodeExecuteOk;
-        if (this.state == DagNodeState.RUNNING) {
-            boolean succeed = bean.execute();
-            setState(succeed ? DagNodeState.SUCCESS : DagNodeState.FAILED);
-            if (succeed) {
-                callback.onCompleted(new ExecuteResult<>(this.info, bean.getResult()));
-            } else {
-                callback.onCompleted(new ExecuteResult<>(this.info, bean.getThrowable()));
-            }
-            nodeExecuteOk = true;
-        } else if (this.state == DagNodeState.INEFFECTIVE) {
-            callback.onCompleted(new ExecuteResult<>(this.info,
-                    new IllegalStateException(String.format("%s node ineffective", info.getName()))));
-            nodeExecuteOk = true;
-        } else {
-            nodeThrowable = new IllegalStateException(String.format("%s invalid state %s", info.getName(), state));
-            callback.onCompleted(new ExecuteResult<>(this.info, nodeThrowable));
-            nodeExecuteOk = false;
-        }
-        onCompleteExecute();
         return nodeExecuteOk;
     }
 
-    private boolean canWaiting(long expired) {
-        return state == DagNodeState.WAITING ||
-                ((-1 == info.getTimeout() || expired <= info.getTimeout()) && DagNodeStateTransition.maybeTransAllow(state, DagNodeState.WAITING));
+    private boolean maybeCanRunning(long expired) {
+        return (-1 == info.getTimeout() || expired <= info.getTimeout()) && maybeTransAllow(state, DagNodeState.RUNNING);
+    }
+
+    private boolean canRunningInMode() {
+        switch (mode) {
+            case PARALLEL:
+                return bean.getParamCount() >= expectDependCount && bean.executeAble();
+            case SWITCH:
+                return bean.getParamCount() > 0 && bean.executeAble();
+            default:
+                return false;
+        }
+    }
+
+    private boolean canIneffectiveInMode() {
+        switch (mode) {
+            case PARALLEL:
+                return getTrace().getFailedDepends().size() > 0;
+            case SWITCH:
+                return getTrace().getFailedDepends().size() >= expectDependCount;
+            default:
+                return false;
+        }
     }
 
     public boolean isRunning() {
@@ -135,20 +154,20 @@ public class DagNode<T extends NodeBean> implements Executor {
     }
 
     public boolean isFinished() {
-        return DagNodeStateTransition.isFinalState(state);
+        return isFinalState(state);
     }
 
     void setPrepared() {
         setState(DagNodeState.PREPARED);
     }
 
-    void setIneffective() {
-        setState(DagNodeState.INEFFECTIVE);
+    void notifyDependFail(DagNode<? extends NodeBean> depend) {
+        getTrace().getFailedDepends().add(depend);
     }
 
     @Override
     public String toString() {
-        return String.format("%s[%s, %s]", this.getClass().getSimpleName(), info.getName(), state);
+        return String.format("%s[%s, %s]", getClass().getSimpleName(), info.getName(), state);
     }
 
     @Override

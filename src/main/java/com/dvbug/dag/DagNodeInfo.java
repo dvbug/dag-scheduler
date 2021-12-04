@@ -1,6 +1,9 @@
 package com.dvbug.dag;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -9,7 +12,7 @@ import java.util.Objects;
  */
 @Getter
 @Setter(AccessLevel.PACKAGE)
-@AllArgsConstructor(access=AccessLevel.MODULE)
+@AllArgsConstructor(access = AccessLevel.MODULE)
 public class DagNodeInfo {
     private final String id;
     private final String name;

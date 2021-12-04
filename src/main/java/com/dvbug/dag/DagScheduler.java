@@ -24,6 +24,8 @@ public class DagScheduler implements DagNodeStateChange {
     }
 
     public void schedule(Dag graph, boolean snapshot) {
+        log.info("{} start, graph={}", this.getClass().getSimpleName(), graph);
+
         graph.getDagNodes().forEach(t -> t.setStateChange(this));
 
         int times = 0;
@@ -53,11 +55,14 @@ public class DagScheduler implements DagNodeStateChange {
         try {
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
-            log.error("Pool await error", e);
+            log.error("Scheduler thread pool await error", e);
         }
+
+        log.info("{} done, graph={}", this.getClass().getSimpleName(), graph);
     }
 
     private void scheduleNode(Dag graph, boolean snapshot, DagNode<? extends NodeBean> node) {
+        executedHistory.add(node);
         Set<DagNode<? extends NodeBean>> children = graph.getChildren().get(node);
         boolean nodeExecSucceed = node.execute(new ExecuteCallback() {
             @Override
@@ -66,8 +71,7 @@ public class DagScheduler implements DagNodeStateChange {
                 if (!result.isSucceed()) {
                     for (DagNode<?> child : children) {
                         log.debug("Delivering node[{}] failure to child {}", result.getInfo().getName(), child);
-                        child.setIneffective();
-                        executedHistory.add(child);
+                        child.notifyDependFail(node);
                     }
                 } else {
                     for (DagNode<?> child : children) {
@@ -80,7 +84,7 @@ public class DagScheduler implements DagNodeStateChange {
         if (snapshot) {
             log.info(dumpSnapshot(graph));
         }
-        executedHistory.add(node);
+
         if (!nodeExecSucceed) {
             log.error("{} execute fail, {}", node, node.getNodeThrowable());
         }
@@ -113,6 +117,10 @@ public class DagScheduler implements DagNodeStateChange {
                 builder.append(" result: ").append(t.getBean().getResult());
             }
             builder.append("\n");
+        });
+        builder.append("traces:\n");
+        nodes.forEach(t -> {
+            builder.append(t.toString()).append(" trace: ").append(t.getTrace()).append("\n");
         });
         builder.append(Util.repeat("=", len)).append("\n");
         builder.append("Result:\n");

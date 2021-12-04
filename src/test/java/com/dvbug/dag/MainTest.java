@@ -1,14 +1,17 @@
 package com.dvbug.dag;
 
+import com.dvbug.strategy.StrategyDefinitions.DoubleStrategy;
+import com.dvbug.strategy.StrategyDefinitions.FinalStrategy;
+import com.dvbug.strategy.StrategyDefinitions.RootStrategy;
+import com.dvbug.strategy.StrategyDefinitions.StringStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import com.dvbug.strategy.StrategyDefinitions.*;
 
 @Slf4j
-public class MainTest{
+public class MainTest {
     @Test
     public void testDAG() {
-        Dag graph = new Dag();
+        Dag graph = new Dag(DagMode.SWITCH);
         DagNode<RootStrategy> rootS = new DagNode<>(new RootStrategy());
         DagNode<FinalStrategy> finalS = new DagNode<>(new FinalStrategy());
 
@@ -21,7 +24,8 @@ public class MainTest{
         DagNode<DoubleStrategy> i1 = new DagNode<>(new DoubleStrategy("i1"));
         DagNode<DoubleStrategy> i2 = new DagNode<>(new DoubleStrategy("i2"));
 
-        s2.getBean().setMockThrowable();
+        s1.getBean().setMockThrowable();
+        i2.getBean().setMockThrowable();
 
         graph.addNode(rootS);
         graph.addNode(finalS);
@@ -48,9 +52,10 @@ public class MainTest{
         graph.addEdge(finalS, s6);
 
         DagScheduler dagScheduler = new DagScheduler();
-        dagScheduler.schedule(graph, true);
+        dagScheduler.schedule(graph, false);
 
         log.info(dagScheduler.dumpHistory(graph));
+        log.info(graph.dumpAdjacencyMatrix());
 
     }
 }
