@@ -20,6 +20,7 @@ public class DagNodeStateTransition {
         put(SUCCESS, new DagNodeState[]{RUNNING});
         put(FAILED, new DagNodeState[]{CREATED, PREPARED, START, WAITING, RUNNING});
         put(INEFFECTIVE, new DagNodeState[]{PREPARED, START, WAITING, RUNNING});
+        put(TIMEOUT, new DagNodeState[]{START, WAITING, RUNNING});
     }};
 
     /**
