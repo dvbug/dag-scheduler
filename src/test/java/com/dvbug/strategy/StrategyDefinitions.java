@@ -20,8 +20,8 @@ public class StrategyDefinitions {
 
         @SneakyThrows
         @Override
-        public boolean doExecute(){
-            if(null != getThrowable()) {
+        public boolean doExecute() {
+            if (null != getThrowable()) {
                 throw getThrowable();
             }
             return true;
@@ -57,7 +57,7 @@ public class StrategyDefinitions {
     @EqualsAndHashCode(callSuper = true)
     public static class StringStrategy extends DebugStrategyBean<String> {
         public StringStrategy(String name) {
-            super(name, StrategyType.MIDDLE);
+            super(name, StrategyType.LOGIC);
         }
 
         @Override
@@ -81,7 +81,7 @@ public class StrategyDefinitions {
     @EqualsAndHashCode(callSuper = true)
     public static class DoubleStrategy extends DebugStrategyBean<Double> {
         public DoubleStrategy(String name) {
-            super(name, StrategyType.MIDDLE);
+            super(name, StrategyType.LOGIC);
         }
 
         @Override

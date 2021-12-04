@@ -1,6 +1,8 @@
 package com.dvbug.dag;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.dvbug.dag.DagNodeState.*;
 
@@ -31,5 +33,26 @@ public class DagNodeStateTransition {
         return !ALLOWED_TRANSFERS.containsKey(newState) ||
                 ALLOWED_TRANSFERS.get(newState).length == 0 ||
                 Arrays.stream(ALLOWED_TRANSFERS.get(newState)).anyMatch(t -> t == oldState);
+    }
+
+    /**
+     * 现态将来是否可能转化为指定的状态
+     *
+     * @param current    现态
+     * @param maybeState 待判断的状态
+     * @return 是否可能转化
+     */
+    public static boolean maybeTransAllow(DagNodeState current, DagNodeState maybeState) {
+        return Arrays.stream(ALLOWED_TRANSFERS.get(maybeState)).anyMatch(t -> t == current || maybeTransAllow(current, t));
+    }
+
+    /**
+     * 判断指定状态是否为最终状态
+     *
+     * @param state 待判断的状态
+     * @return 是否是最终状态
+     */
+    public static boolean isFinalState(DagNodeState state) {
+        return Arrays.stream(values()).noneMatch(t -> maybeTransAllow(state, t));
     }
 }

@@ -42,6 +42,7 @@ public class DagNode<T extends NodeBean> implements Executor {
                 timeout);
         this.trace = new TraceInfo(System.currentTimeMillis());
         this.state = DagNodeState.CREATED;
+        onAfterInit();
     }
 
     public void putParam(Object param) {
@@ -69,13 +70,14 @@ public class DagNode<T extends NodeBean> implements Executor {
     }
 
     @Override
-    public boolean execute(ExecuteCallback callback) {
+    public final boolean execute(ExecuteCallback callback) {
         log.debug("{} is start", this);
+        onBeforeExecute();
 
         setState(DagNodeState.START);
 
         long expired = 0;
-        while ((state != DagNodeState.RUNNING && state != DagNodeState.INEFFECTIVE) && (-1 == info.getTimeout() || expired <= info.getTimeout())) {
+        while (canWaiting(expired)) {
             printParamsCount();
             if (bean.getParamCount() >= expectDependCount && bean.executeAble()) {
                 setState(DagNodeState.RUNNING);
@@ -89,6 +91,7 @@ public class DagNode<T extends NodeBean> implements Executor {
                     e.printStackTrace();
                     nodeThrowable = e;
                     callback.onCompleted(new ExecuteResult<>(this.info, e));
+                    onCompleteExecute();
                     return false;
                 }
             }
@@ -114,8 +117,13 @@ public class DagNode<T extends NodeBean> implements Executor {
             callback.onCompleted(new ExecuteResult<>(this.info, nodeThrowable));
             nodeExecuteOk = false;
         }
-
+        onCompleteExecute();
         return nodeExecuteOk;
+    }
+
+    private boolean canWaiting(long expired) {
+        return state == DagNodeState.WAITING ||
+                ((-1 == info.getTimeout() || expired <= info.getTimeout()) && DagNodeStateTransition.maybeTransAllow(state, DagNodeState.WAITING));
     }
 
     public boolean isRunning() {
@@ -127,7 +135,7 @@ public class DagNode<T extends NodeBean> implements Executor {
     }
 
     public boolean isFinished() {
-        return state == DagNodeState.SUCCESS || state == DagNodeState.FAILED;
+        return DagNodeStateTransition.isFinalState(state);
     }
 
     void setPrepared() {
@@ -154,6 +162,15 @@ public class DagNode<T extends NodeBean> implements Executor {
     @Override
     public int hashCode() {
         return Objects.hash(info, bean);
+    }
+
+    public void onAfterInit() {
+    }
+
+    public void onBeforeExecute() {
+    }
+
+    public void onCompleteExecute() {
     }
 }
 
