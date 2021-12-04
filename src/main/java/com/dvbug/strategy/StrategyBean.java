@@ -25,6 +25,8 @@ public abstract class StrategyBean<R> implements NodeBean {
     private final String name;
     private final StrategyType type;
     private R result;
+    @Setter(AccessLevel.PROTECTED)
+    private Throwable throwable;
     @Setter(AccessLevel.NONE)
     private List<Object> params = new ArrayList<>();
     private final Object lockObj = new Object();
@@ -35,9 +37,21 @@ public abstract class StrategyBean<R> implements NodeBean {
         }
         log.debug("{} environment: params={}", this, getParams());
         try {
-            return executeAble() && doExecute();
-        } finally {
-            log.debug("{} do {} to: {}", this, getParams(), getResult());
+            boolean ok = executeAble() && doExecute();
+            if(ok) {
+                setThrowable(null);
+            }
+            return ok;
+        } catch (Throwable e) {
+            setResult(null);
+            setThrowable(e);
+            return false;
+        }finally {
+            if(null == throwable) {
+                log.debug("{} do {} to: {}", this, getParams(), getResult());
+            } else {
+                log.warn("{} do {} to: {}, err: {}", this, getParams(), getResult(), getThrowable());
+            }
         }
     }
 
@@ -45,6 +59,15 @@ public abstract class StrategyBean<R> implements NodeBean {
         return (!params.isEmpty()) && canExecute();
     }
 
+    /**
+     * 核心执行动作方法<br/>
+     *
+     * 子类如果执行成功,需要调用 {@link StrategyBean#setResult(R)} 设置执行结果<br/>
+     * 子类如果执行失败,需要调用 {@link StrategyBean#setThrowable(Throwable)} 设置执行异常<br/>
+     * 子类如果抛出异常, {@link StrategyBean#execute()}<br/>
+     * 内会自动调用 {@link StrategyBean#setThrowable(Throwable)} 设置执行异常,并返回 false<br/>
+     * @return 返回是否执行成功
+     */
     public abstract boolean doExecute();
 
     public abstract boolean canExecute();

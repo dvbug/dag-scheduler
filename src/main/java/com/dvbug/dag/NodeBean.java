@@ -16,6 +16,8 @@ public interface NodeBean {
 
     Object getResult();
 
+    Throwable getThrowable();
+
     void setParam(Object param);
 
     int getParamCount();

@@ -31,5 +31,9 @@ public enum DagNodeState {
     /**
      * 执行失败
      */
-    FAILED
+    FAILED,
+    /**
+     * 无效节点(父节点失败后下游单依赖子节点全部无效)
+     */
+    INEFFECTIVE
 }

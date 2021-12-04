@@ -54,13 +54,20 @@ public class DagScheduler implements DagNodeStateChange {
                 for (DagNode<? extends NodeBean> dagNode : todoDagNodes) {
                     pool.submit(() -> {
                         Set<DagNode<? extends NodeBean>> children = DAG.getChildren().get(dagNode);
-                        boolean succeed = dagNode.execute(new ExecuteCallback() {
+                        boolean nodeExecSucceed = dagNode.execute(new ExecuteCallback() {
                             @Override
                             public <R> void onCompleted(ExecuteResult<R> result) {
                                 log.debug("Node executed done, begin delivering result[{}] to {} children", result, children.size());
-                                for (DagNode<?> child : children) {
-                                    log.debug("Delivering node[{}] result to child {}", result.getInfo().getName(), child);
-                                    child.putParam(result.isSucceed() ? result.getResult() : result.getThrowable());
+                                if (!result.isSucceed()) {
+                                    for (DagNode<?> child : children) {
+                                        log.debug("Delivering node[{}] failure to child {}", result.getInfo().getName(), child);
+                                        child.setIneffective();
+                                    }
+                                } else {
+                                    for (DagNode<?> child : children) {
+                                        log.debug("Delivering node[{}] result to child {}", result.getInfo().getName(), child);
+                                        child.putParam(result.isSucceed() ? result.getResult() : result.getThrowable());
+                                    }
                                 }
                             }
                         });
@@ -68,8 +75,8 @@ public class DagScheduler implements DagNodeStateChange {
                             log.info(dumpSnapshot(DAG));
                         }
                         executedHistory.add(dagNode);
-                        if (!succeed) {
-                            log.error("{} execute fail", dagNode);
+                        if (!nodeExecSucceed) {
+                            log.error("{} execute fail, {}", dagNode, dagNode.getNodeThrowable());
                         }
                     });
                 }

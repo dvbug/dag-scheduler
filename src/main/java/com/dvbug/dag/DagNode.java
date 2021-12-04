@@ -26,6 +26,8 @@ public class DagNode<T extends NodeBean> implements Executor {
     private int expectDependCount;
     @Setter
     private DagNodeStateChange stateChange;
+    @Getter(AccessLevel.MODULE)
+    private Throwable nodeThrowable;
 
     public DagNode(T bean) {
         this(bean, -1);
@@ -55,24 +57,12 @@ public class DagNode<T extends NodeBean> implements Executor {
         if (this.state.equals(state)) {
             return;
         }
-
         DagNodeState oldState = this.state;
+        if (!DagNodeStateTransition.transAllow(oldState, state)) {
+            return;
+        }
         this.state = state;
         this.getTrace().setFinalState(state);
-        switch (state) {
-            case START:
-                this.getTrace().setStartedTime(System.currentTimeMillis());
-                break;
-            case FAILED:
-            case SUCCESS:
-                this.getTrace().setCompleted(true);
-                this.getTrace().setCompletedTime(System.currentTimeMillis());
-                break;
-            case RUNNING:
-                this.getTrace().setRunningTime(System.currentTimeMillis());
-                break;
-        }
-
         if (null != stateChange) {
             stateChange.changed(oldState, state, this.info);
         }
@@ -85,7 +75,7 @@ public class DagNode<T extends NodeBean> implements Executor {
         setState(DagNodeState.START);
 
         long expired = 0;
-        while (state != DagNodeState.RUNNING && (-1 == info.getTimeout() || expired <= info.getTimeout())) {
+        while ((state != DagNodeState.RUNNING && state != DagNodeState.INEFFECTIVE) && (-1 == info.getTimeout() || expired <= info.getTimeout())) {
             printParamsCount();
             if (bean.getParamCount() >= expectDependCount && bean.executeAble()) {
                 setState(DagNodeState.RUNNING);
@@ -97,6 +87,7 @@ public class DagNode<T extends NodeBean> implements Executor {
                 } catch (InterruptedException e) {
                     setState(DagNodeState.FAILED);
                     e.printStackTrace();
+                    nodeThrowable = e;
                     callback.onCompleted(new ExecuteResult<>(this.info, e));
                     return false;
                 }
@@ -104,17 +95,27 @@ public class DagNode<T extends NodeBean> implements Executor {
             expired = System.currentTimeMillis() - getTrace().getStartedTime();
         }
 
-        boolean succeed = false;
+        boolean nodeExecuteOk;
         if (this.state == DagNodeState.RUNNING) {
-            succeed = bean.execute();
-            Object result = bean.getResult();
+            boolean succeed = bean.execute();
             setState(succeed ? DagNodeState.SUCCESS : DagNodeState.FAILED);
-            callback.onCompleted(new ExecuteResult<>(this.info, result));
+            if (succeed) {
+                callback.onCompleted(new ExecuteResult<>(this.info, bean.getResult()));
+            } else {
+                callback.onCompleted(new ExecuteResult<>(this.info, bean.getThrowable()));
+            }
+            nodeExecuteOk = true;
+        } else if (this.state == DagNodeState.INEFFECTIVE) {
+            callback.onCompleted(new ExecuteResult<>(this.info,
+                    new IllegalStateException(String.format("%s node ineffective", info.getName()))));
+            nodeExecuteOk = true;
         } else {
-            throw new IllegalStateException(String.format("%s invalid state %s", info.getName(), state));
+            nodeThrowable = new IllegalStateException(String.format("%s invalid state %s", info.getName(), state));
+            callback.onCompleted(new ExecuteResult<>(this.info, nodeThrowable));
+            nodeExecuteOk = false;
         }
 
-        return succeed;
+        return nodeExecuteOk;
     }
 
     public boolean isRunning() {
@@ -131,6 +132,10 @@ public class DagNode<T extends NodeBean> implements Executor {
 
     void setPrepared() {
         setState(DagNodeState.PREPARED);
+    }
+
+    void setIneffective() {
+        setState(DagNodeState.INEFFECTIVE);
     }
 
     @Override

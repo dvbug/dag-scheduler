@@ -21,6 +21,8 @@ public class MainTest{
         DagNode<DoubleStrategy> i1 = new DagNode<>(new DoubleStrategy("i1"));
         DagNode<DoubleStrategy> i2 = new DagNode<>(new DoubleStrategy("i2"));
 
+        s2.getBean().setMockThrowable();
+
         graph.addNode(rootS);
         graph.addNode(finalS);
         graph.addNode(s1);
@@ -46,7 +48,7 @@ public class MainTest{
         graph.addEdge(finalS, s6);
 
         DagScheduler dagScheduler = new DagScheduler();
-        dagScheduler.schedule(graph);
+        dagScheduler.schedule(graph, true);
 
         log.info(dagScheduler.dumpHistory(graph));
 
