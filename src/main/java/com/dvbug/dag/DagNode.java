@@ -110,7 +110,6 @@ public class DagNode<T extends NodeBean> implements Executor {
                     e.printStackTrace();
                     nodeThrowable = e;
                     callback.onCompleted(new ExecuteResult<>(info, trace, e));
-                    onCompleteExecute();
                     nodeExecuteOk = false;
                     break;
                 }
@@ -118,10 +117,12 @@ public class DagNode<T extends NodeBean> implements Executor {
             expired = System.currentTimeMillis() - getTrace().getStateTime(DagNodeState.START);
         }
 
-        if(expired > info.getTimeout() && !nodeExecuteOk) {
+        if (expired > info.getTimeout() && !nodeExecuteOk) {
             setState(DagNodeState.TIMEOUT);
             callback.onCompleted(new ExecuteResult<>(info, trace, new IllegalStateException(String.format("%s node timeout", info.getName()))));
         }
+
+        onCompletedExecute();
 
         return nodeExecuteOk;
     }
@@ -196,7 +197,7 @@ public class DagNode<T extends NodeBean> implements Executor {
     public void onBeforeExecute() {
     }
 
-    public void onCompleteExecute() {
+    public void onCompletedExecute() {
     }
 }
 
