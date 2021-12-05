@@ -17,7 +17,7 @@ import static java.lang.Thread.sleep;
  */
 @Getter
 @Slf4j
-public class DagNode<T extends NodeBean<?>> implements ExecuteAble {
+public class DagNode<T extends NodeBean<?>> implements Executable {
     private Dag<?> graph;
     private final DagNodeInfo info;
     private final TraceInfo trace;

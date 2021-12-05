@@ -1,5 +1,5 @@
 package com.dvbug.dag;
 
-public interface ExecuteAble {
+public interface Executable {
     boolean execute(DagNodeExecutionCallback callback);
 }
