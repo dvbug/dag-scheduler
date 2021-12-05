@@ -10,13 +10,13 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class ExecuteResult<R> {
+final class DagNodeExecuteResult<R> {
     private final R result;
     private final DagNodeInfo info;
     private final TraceInfo trace;
     private final Throwable throwable;
 
-    public ExecuteResult(DagNodeInfo info, TraceInfo trace, R result) {
+    public DagNodeExecuteResult(DagNodeInfo info, TraceInfo trace, R result) {
         this.info = info;
         this.trace = trace;
         if (result instanceof Throwable) {
@@ -28,7 +28,7 @@ public class ExecuteResult<R> {
         }
     }
 
-    public ExecuteResult(DagNodeInfo info, TraceInfo trace, Throwable throwable) {
+    public DagNodeExecuteResult(DagNodeInfo info, TraceInfo trace, Throwable throwable) {
         this.result = null;
         this.info = info;
         this.trace = trace;

@@ -1,7 +1,6 @@
 package com.dvbug.dag;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,36 +11,32 @@ import java.util.Objects;
  */
 @Getter
 @Setter(AccessLevel.PACKAGE)
-@AllArgsConstructor(access = AccessLevel.MODULE)
 public class DagNodeInfo {
-    private final String id;
+    private String graphId;
+    private DagMode mode;
     private final String name;
     private final long timeout;
 
-
-    public String toShortString() {
-        return String.format("%s:%s", name, id);
-    }
-
-    public String toLongString() {
-        return String.format("%s[%s:%s,timeout=%s]", DagNodeInfo.class.getSimpleName(), name, id, timeout);
+    public DagNodeInfo(String name, long timeout) {
+        this.name = name;
+        this.timeout = timeout;
     }
 
     @Override
     public String toString() {
-        return toShortString();
+        return String.format("%s[%s:%s,timeout=%s]", DagNodeInfo.class.getSimpleName(), graphId, name, timeout);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DagNodeInfo dagNodeInfo = (DagNodeInfo) o;
-        return id.equals(dagNodeInfo.id);
+        DagNodeInfo that = (DagNodeInfo) o;
+        return graphId.equals(that.graphId) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(graphId, name);
     }
 }

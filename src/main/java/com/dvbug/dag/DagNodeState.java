@@ -1,7 +1,7 @@
 package com.dvbug.dag;
 
 /**
- * DAG图节点状态
+ * {@link DagNode<>}节点状态
  */
 public enum DagNodeState {
     /**

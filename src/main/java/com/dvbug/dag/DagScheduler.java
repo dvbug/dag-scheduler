@@ -11,29 +11,34 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * DAG调度器
+ * {@link Dag<>}调度器
  */
 @Slf4j
-public class DagScheduler implements DagNodeStateChange {
+public final class DagScheduler {
     private static final ExecutorService pool = Executors.newFixedThreadPool(5);
 
     private final List<DagNode<?>> executedHistory = new ArrayList<>();
 
-    public void schedule(Dag graph) {
-        schedule(graph, false);
+    public <P> void schedule(Dag<?> graph, P inputParam) {
+        schedule(graph, inputParam, false);
     }
 
-    public void schedule(Dag graph, boolean snapshot) {
-        log.info("{} start, graph={}", this.getClass().getSimpleName(), graph);
+    public <P> void schedule(Dag<?> graph, P inputParam, boolean snapshot) {
+        log.info("{} start with input={} to graph={}", this.getClass().getSimpleName(), inputParam, graph);
 
-        graph.getDagNodes().forEach(t -> t.setStateChange(this));
+        if (graph.isScheduling()) {
+            throw new IllegalStateException(String.format("%s is scheduling now", graph));
+        }
+
+        graph.setPrepared();
+        graph.setInput(inputParam);
 
         int times = 0;
         while (true) {
             List<DagNode<?>> todoNodes = new ArrayList<>();
             for (DagNode<?> dagNode : times == 0 ? graph.getRootNodes() : graph.getDagNodes()) {
                 if (!dagNode.isScheduled()) {
-                    Set<DagNode<? extends NodeBean>> depends = graph.getDepends().get(dagNode);
+                    Set<DagNode<? extends NodeBean<?>>> depends = graph.getDepends().get(dagNode);
                     if (null == depends || depends.isEmpty() || depends.stream().allMatch(DagNode::isScheduled)) {
                         dagNode.setPrepared();
                         todoNodes.add(dagNode);
@@ -42,7 +47,8 @@ public class DagScheduler implements DagNodeStateChange {
             }
 
             if (!todoNodes.isEmpty()) {
-                for (DagNode<? extends NodeBean> node : todoNodes) {
+                graph.setScheduling();
+                for (DagNode<? extends NodeBean<?>> node : todoNodes) {
                     pool.submit(() -> scheduleNode(graph, snapshot, node));
                 }
             } else {
@@ -57,17 +63,17 @@ public class DagScheduler implements DagNodeStateChange {
         } catch (InterruptedException e) {
             log.error("Scheduler thread pool await error", e);
         }
-
+        graph.setCompleted();
         log.info("{} done, graph={}", this.getClass().getSimpleName(), graph);
     }
 
-    private void scheduleNode(Dag graph, boolean snapshot, DagNode<? extends NodeBean> node) {
+    private void scheduleNode(Dag<?> graph, boolean snapshot, DagNode<? extends NodeBean<?>> node) {
         executedHistory.add(node);
-        Set<DagNode<? extends NodeBean>> children = graph.getChildren().get(node);
-        boolean nodeExecSucceed = node.execute(new ExecuteCallback() {
+        Set<DagNode<? extends NodeBean<?>>> children = graph.getChildren().get(node);
+        boolean nodeExecSucceed = node.execute(new DagNodeExecutionCallback() {
             @Override
-            public <R> void onCompleted(ExecuteResult<R> result) {
-                log.debug("Node executed done, begin delivering result[{}] to {} children", result, children.size());
+            public <R> void onCompleted(DagNodeExecuteResult<R> result) {
+                log.debug("Node[{}] executed done, begin delivering execute result [{}] to {} children", node.getInfo().getName(), result, children.size());
                 if (!result.isSucceed()) {
                     for (DagNode<?> child : children) {
                         log.debug("Delivering node[{}] failure to child {}", result.getInfo().getName(), child);
@@ -90,16 +96,12 @@ public class DagScheduler implements DagNodeStateChange {
         }
     }
 
-    public Object getResult(Dag graph) {
-        return graph.getFinalDagNode().getBean().getResult();
+    public String dumpHistory(Dag<?> graph) {
+        return buildLog(String.format("%s HISTORY", graph.getClass().getSimpleName()), graph.getGraphId(), executedHistory, graph.getOutput());
     }
 
-    public String dumpHistory(Dag graph) {
-        return buildLog(String.format("%s HISTORY", graph.getClass().getSimpleName()), graph.getGraphId(), executedHistory, getResult(graph));
-    }
-
-    private String dumpSnapshot(Dag graph) {
-        return buildLog(String.format("%s SNAPSHOT", graph.getClass().getSimpleName()), graph.getGraphId(), graph.getDagNodes(), getResult(graph));
+    private String dumpSnapshot(Dag<?> graph) {
+        return buildLog(String.format("%s SNAPSHOT", graph.getClass().getSimpleName()), graph.getGraphId(), graph.getDagNodes(), graph.getOutput());
     }
 
     private String buildLog(String marker, String graphId, Collection<DagNode<?>> nodes, Object result) {
@@ -126,10 +128,5 @@ public class DagScheduler implements DagNodeStateChange {
         builder.append("Result:\n");
         builder.append(result);
         return builder.toString();
-    }
-
-    @Override
-    public void changed(DagNodeState oldState, DagNodeState newState, DagNodeInfo node) {
-        log.trace("Node[{}] state changed: {} -> {}", node.getName(), oldState, newState);
     }
 }

@@ -13,7 +13,7 @@ public class TraceInfo {
     @Getter
     private DagNodeState finalState;
     @Getter
-    private final List<DagNode<? extends NodeBean>> failedDepends = new ArrayList<>();
+    private final List<DagNode<? extends NodeBean<?>>> failedDepends = new ArrayList<>();
 
     public TraceInfo() {
         for (DagNodeState state : DagNodeState.values()) {

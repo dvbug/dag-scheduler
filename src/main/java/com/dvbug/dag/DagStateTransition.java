@@ -4,22 +4,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.dvbug.dag.DagNodeState.*;
+import static com.dvbug.dag.DagState.*;
+
 
 /**
- * {@link DagNodeState}状态机
+ * {@link DagState}状态机
  */
-final class DagNodeStateTransition {
-    public static final Map<DagNodeState, DagNodeState[]> ALLOWED_TRANSFERS = new HashMap<DagNodeState, DagNodeState[]>() {{
-        put(CREATED, new DagNodeState[0]);
-        put(PREPARED, new DagNodeState[]{CREATED});
-        put(START, new DagNodeState[]{PREPARED});
-        put(WAITING, new DagNodeState[]{START});
-        put(RUNNING, new DagNodeState[]{START, WAITING});
-        put(SUCCESS, new DagNodeState[]{RUNNING});
-        put(FAILED, new DagNodeState[]{CREATED, PREPARED, START, WAITING, RUNNING});
-        put(INEFFECTIVE, new DagNodeState[]{PREPARED, START, WAITING, RUNNING});
-        put(TIMEOUT, new DagNodeState[]{START, WAITING, RUNNING});
+public class DagStateTransition {
+    public static final Map<DagState, DagState[]> ALLOWED_TRANSFERS = new HashMap<DagState, DagState[]>() {{
+        put(CREATED, new DagState[0]);
+        put(INITIALIZING, new DagState[]{CREATED});
+        put(PREPARED, new DagState[]{INITIALIZING});
+        put(SCHEDULING, new DagState[]{PREPARED});
+        put(COMPLETED, new DagState[]{SCHEDULING});
     }};
 
     /**
@@ -29,7 +26,7 @@ final class DagNodeStateTransition {
      * @param newState 次态
      * @return 是否可以转化
      */
-    public static boolean transAllow(DagNodeState oldState, DagNodeState newState) {
+    public static boolean transAllow(DagState oldState, DagState newState) {
         return !ALLOWED_TRANSFERS.containsKey(newState) ||
                 ALLOWED_TRANSFERS.get(newState).length == 0 ||
                 Arrays.stream(ALLOWED_TRANSFERS.get(newState)).anyMatch(t -> t == oldState);
@@ -42,7 +39,7 @@ final class DagNodeStateTransition {
      * @param maybeState 待判断的状态
      * @return 是否可能转化
      */
-    public static boolean maybeTransAllow(DagNodeState current, DagNodeState maybeState) {
+    public static boolean maybeTransAllow(DagState current, DagState maybeState) {
         return Arrays.stream(ALLOWED_TRANSFERS.get(maybeState)).anyMatch(t -> t == current || maybeTransAllow(current, t));
     }
 
@@ -52,7 +49,7 @@ final class DagNodeStateTransition {
      * @param state 待判断的状态
      * @return 是否是最终状态
      */
-    public static boolean isFinalState(DagNodeState state) {
+    public static boolean isFinalState(DagState state) {
         return Arrays.stream(values()).noneMatch(t -> maybeTransAllow(state, t));
     }
 }
