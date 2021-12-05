@@ -1,200 +1,203 @@
-TRACE [main] [c.d.d.Dag] onDagCreated Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=0, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-root, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=1, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-final, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=2, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s1, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=3, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s2, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=4, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s3, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=5, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s4, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=6, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s5, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=7, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s6, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=8, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-i1, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=9, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-i2, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=0]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-root, CREATED], to=DagNode[node-s1, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=1]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-root, CREATED], to=DagNode[node-i1, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=2]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s1, CREATED], to=DagNode[node-s2, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=3]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s1, CREATED], to=DagNode[node-s3, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=4]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i1, CREATED], to=DagNode[node-s4, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=5]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i1, CREATED], to=DagNode[node-i2, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=6]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s3, CREATED], to=DagNode[node-s5, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=7]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s4, CREATED], to=DagNode[node-s5, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=8]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s2, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=9]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s5, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=10]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i2, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=11]
-TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s6, CREATED], to=DagNode[node-final, CREATED], graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
-INFO  [main] [c.d.d.DagScheduler] DagScheduler start with input=你好，这是一条由RootStrategy生成的测试语句 to graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
-TRACE [main] [c.d.d.Dag] onDagPrepared Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
+TRACE [main] [c.d.d.Dag] onDagCreated Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=0, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-root, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=1, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-final, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=2, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s1, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=3, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s2, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=4, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s3, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=5, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s4, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=6, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s5, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=7, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-s6, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=8, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-i1, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=9, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagNodeAdded: node=DagNode[node-i2, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=0]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-root, CREATED], to=DagNode[node-s1, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=1]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-root, CREATED], to=DagNode[node-i1, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=2]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s1, CREATED], to=DagNode[node-s2, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=3]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s1, CREATED], to=DagNode[node-s3, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=4]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i1, CREATED], to=DagNode[node-s4, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=5]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i1, CREATED], to=DagNode[node-i2, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=6]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s3, CREATED], to=DagNode[node-s5, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=7]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s4, CREATED], to=DagNode[node-s5, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=8]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s2, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=9]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s5, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=10]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-i2, CREATED], to=DagNode[node-s6, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=11]
+TRACE [main] [c.d.d.Dag] onDagEdgeAdded: from=DagNode[node-s6, CREATED], to=DagNode[node-final, CREATED], graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
+INFO  [main] [c.d.d.DagScheduler] DagScheduler start with input=你好，这是一条由RootStrategy生成的测试语句 to graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
+TRACE [main] [c.d.d.Dag] onDagPrepared Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
 TRACE [main] [c.d.d.Dag] Node[node-root] state changed: CREATED -> PREPARED
-TRACE [main] [c.d.d.Dag] onDagScheduling Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
-TRACE [main] [c.d.d.Dag] Node[node-s1] state changed: CREATED -> PREPARED
-TRACE [main] [c.d.d.Dag] Node[node-s2] state changed: CREATED -> PREPARED
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-root] state changed: PREPARED -> START
-TRACE [main] [c.d.d.Dag] Node[node-s3] state changed: CREATED -> PREPARED
+TRACE [main] [c.d.d.Dag] onDagScheduling Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
 TRACE [main] [c.d.d.Dag] Node[node-i1] state changed: CREATED -> PREPARED
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-root, START], param depend expect=0, actual=1
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-root] state changed: START -> RUNNING
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-s1] state changed: PREPARED -> START
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s2] state changed: PREPARED -> START
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-s1, START], param depend expect=1, actual=0
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-root] state changed: PREPARED -> START
 TRACE [main] [c.d.d.Dag] Node[node-s4] state changed: CREATED -> PREPARED
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s2, START], param depend expect=1, actual=0
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-s1] state changed: START -> WAITING
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s3] state changed: PREPARED -> START
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s2] state changed: START -> WAITING
 TRACE [main] [c.d.d.Dag] Node[node-i2] state changed: CREATED -> PREPARED
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-i1] state changed: PREPARED -> START
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s3, START], param depend expect=1, actual=0
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-root, START], param depend expect=0, actual=1
+TRACE [main] [c.d.d.Dag] Node[node-s1] state changed: CREATED -> PREPARED
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-root] state changed: START -> RUNNING
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i1] state changed: PREPARED -> START
+TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s4] state changed: PREPARED -> START
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i1, START], param depend expect=1, actual=0
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i1] state changed: START -> WAITING
+TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-i2] state changed: PREPARED -> START
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, START], param depend expect=1, actual=0
+TRACE [main] [c.d.d.Dag] Node[node-s3] state changed: CREATED -> PREPARED
+TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s4] state changed: START -> WAITING
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, START], param depend expect=1, actual=0
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s1] state changed: PREPARED -> START
+TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-i2] state changed: START -> WAITING
+TRACE [main] [c.d.d.Dag] Node[node-s2] state changed: CREATED -> PREPARED
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s1, START], param depend expect=1, actual=0
 TRACE [main] [c.d.d.Dag] Node[node-s5] state changed: CREATED -> PREPARED
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s1] state changed: START -> WAITING
 DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] RootStrategy[root:ROOT] execute: params=[你好，这是一条由RootStrategy生成的测试语句]
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-i1, START], param depend expect=1, actual=0
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s3] state changed: START -> WAITING
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-i1] state changed: START -> WAITING
-DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] RootStrategy[root:ROOT] do [你好，这是一条由RootStrategy生成的测试语句] to: 你好，这是一条由RootStrategy生成的测试语句
 TRACE [main] [c.d.d.Dag] Node[node-s6] state changed: CREATED -> PREPARED
+DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] RootStrategy[root:ROOT] do [你好，这是一条由RootStrategy生成的测试语句] to: 你好，这是一条由RootStrategy生成的测试语句
 TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-root] state changed: RUNNING -> SUCCESS
 TRACE [main] [c.d.d.Dag] Node[node-final] state changed: CREATED -> PREPARED
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s2, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s3, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Node[node-root] executed done, begin delivering execute result [DagNodeExecuteResult(result=你好，这是一条由RootStrategy生成的测试语句, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-root,timeout=-1], trace=TraceInfo[waitingT=0,ineffectiveT=0,timeoutT=0,startT=1638710384016,runningT=1638710384016,failedT=0,preparedT=1638710384000,successT=1638710384017,createdT=1638710383990,state=SUCCESS,failedDepends=[]], throwable=null)] to 2 children
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Node[node-root] executed done, begin delivering execute result [DagNodeExecuteResult(result=你好，这是一条由RootStrategy生成的测试语句, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-root,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078742,createdT=1638711078729,startT=1638711078761,runningT=1638711078763,timeoutT=0,waitingT=0,failedT=0,successT=1638711078764,state=SUCCESS,failedDepends=[]], throwable=null)] to 2 children
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-root] result to child DagNode[node-i1, WAITING]
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=1
 DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-root] result to child DagNode[node-s1, WAITING]
 DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=1
-DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-root] result to child DagNode[node-i1, WAITING]
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=1
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-s1] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s2, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s3, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s4] state changed: PREPARED -> START
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-i1] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s4, START], param depend expect=1, actual=0
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s4] state changed: START -> WAITING
-DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] StringStrategy[s1:LOGIC] execute: params=[你好，这是一条由RootStrategy生成的测试语句]
-DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] DoubleStrategy[i1:LOGIC] execute: params=[你好，这是一条由RootStrategy生成的测试语句]
-WARN  [pool-2-thread-2] [c.d.s.StrategyBean] StringStrategy[s1:LOGIC] do [你好，这是一条由RootStrategy生成的测试语句] err: java.lang.RuntimeException: mock error for debug
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-s1] state changed: RUNNING -> FAILED
-DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Node[node-s1] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s1,timeout=-1], trace=TraceInfo[waitingT=1638710384017,ineffectiveT=0,timeoutT=0,startT=1638710384016,runningT=1638710384019,failedT=1638710384021,preparedT=1638710384015,successT=0,createdT=1638710383992,state=FAILED,failedDepends=[]], throwable=java.lang.RuntimeException: mock error for debug)] to 2 children
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s2, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Delivering node[node-s1] failure to child DagNode[node-s2, WAITING]
-DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Delivering node[node-s1] failure to child DagNode[node-s3, WAITING]
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s3, WAITING], param depend expect=1, actual=0
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i2] state changed: PREPARED -> START
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s3] state changed: WAITING -> INEFFECTIVE
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i2, START], param depend expect=1, actual=0
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i2] state changed: START -> WAITING
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Node[node-s3] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s3,timeout=-1], trace=TraceInfo[waitingT=1638710384017,ineffectiveT=1638710384021,timeoutT=0,startT=1638710384017,runningT=0,failedT=0,preparedT=1638710384016,successT=0,createdT=1638710383992,state=INEFFECTIVE,failedDepends=[node-s1]], throwable=java.lang.IllegalStateException: node-s3 node ineffective)] to 1 children
-DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Delivering node[node-s3] failure to child DagNode[node-s5, PREPARED]
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s5] state changed: PREPARED -> START
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s5, START], param depend expect=2, actual=0
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s2, WAITING], param depend expect=1, actual=0
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s5] state changed: START -> WAITING
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s2] state changed: WAITING -> INEFFECTIVE
-DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Node[node-s2] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s2,timeout=-1], trace=TraceInfo[waitingT=1638710384017,ineffectiveT=1638710384022,timeoutT=0,startT=1638710384016,runningT=0,failedT=0,preparedT=1638710384016,successT=0,createdT=1638710383992,state=INEFFECTIVE,failedDepends=[node-s1]], throwable=java.lang.IllegalStateException: node-s2 node ineffective)] to 1 children
-DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Delivering node[node-s2] failure to child DagNode[node-s6, PREPARED]
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s6] state changed: PREPARED -> START
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s6, START], param depend expect=3, actual=0
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s6] state changed: START -> WAITING
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=0
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] DoubleStrategy[i1:LOGIC] do [你好，这是一条由RootStrategy生成的测试语句] to: 35960.526956650676
-DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-i1] state changed: RUNNING -> SUCCESS
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
-DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Node[node-i1] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-i1,timeout=-1], trace=TraceInfo[waitingT=1638710384017,ineffectiveT=0,timeoutT=0,startT=1638710384017,runningT=1638710384020,failedT=0,preparedT=1638710384016,successT=1638710384024,createdT=1638710383993,state=SUCCESS,failedDepends=[]], throwable=null)] to 2 children
-DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-i1] result to child DagNode[node-s4, WAITING]
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=0
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=1
-DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-i1] result to child DagNode[node-i2, WAITING]
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-final] state changed: PREPARED -> START
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-final, START], param depend expect=1, actual=0
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-final] state changed: START -> WAITING
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s4] state changed: WAITING -> RUNNING
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s3] state changed: PREPARED -> START
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s3, START], param depend expect=1, actual=0
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s3] state changed: START -> WAITING
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i1, WAITING], param depend expect=1, actual=1
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i1] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s1, WAITING], param depend expect=1, actual=1
+DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] DoubleStrategy[i1:LOGIC] execute: params=[你好，这是一条由RootStrategy生成的测试语句]
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s1] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] StringStrategy[s1:LOGIC] execute: params=[你好，这是一条由RootStrategy生成的测试语句]
+WARN  [pool-2-thread-5] [c.d.s.StrategyBean] StringStrategy[s1:LOGIC] do [你好，这是一条由RootStrategy生成的测试语句] err: java.lang.RuntimeException: mock error for debug
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s1] state changed: RUNNING -> FAILED
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s3, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Node[node-s1] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s1,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078733,startT=1638711078764,runningT=1638711078768,timeoutT=0,waitingT=1638711078764,failedT=1638711078768,successT=0,state=FAILED,failedDepends=[]], throwable=java.lang.RuntimeException: mock error for debug)] to 2 children
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-s1] failure to child DagNode[node-s3, WAITING]
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-s1] failure to child DagNode[node-s2, PREPARED]
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s2] state changed: PREPARED -> START
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s2, START], param depend expect=1, actual=0
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s2] state changed: START -> INEFFECTIVE
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s3, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Node[node-s2] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s2,timeout=-1], trace=TraceInfo[ineffectiveT=1638711078769,preparedT=1638711078764,createdT=1638711078734,startT=1638711078769,runningT=0,timeoutT=0,waitingT=0,failedT=0,successT=0,state=INEFFECTIVE,failedDepends=[node-s1]], throwable=java.lang.IllegalStateException: node-s2 node ineffective)] to 1 children
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-s2] failure to child DagNode[node-s6, PREPARED]
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s3] state changed: WAITING -> INEFFECTIVE
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s5] state changed: PREPARED -> START
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s5, START], param depend expect=2, actual=0
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Node[node-s3] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s3,timeout=-1], trace=TraceInfo[ineffectiveT=1638711078770,preparedT=1638711078764,createdT=1638711078734,startT=1638711078767,runningT=0,timeoutT=0,waitingT=1638711078767,failedT=0,successT=0,state=INEFFECTIVE,failedDepends=[node-s1]], throwable=java.lang.IllegalStateException: node-s3 node ineffective)] to 1 children
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s5] state changed: START -> WAITING
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-s3] failure to child DagNode[node-s5, WAITING]
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s6] state changed: PREPARED -> START
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s6, START], param depend expect=3, actual=0
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s6] state changed: START -> WAITING
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] DoubleStrategy[i1:LOGIC] do [你好，这是一条由RootStrategy生成的测试语句] to: 35960.526956650676
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i1] state changed: RUNNING -> SUCCESS
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=0
+DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Node[node-i1] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-i1,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078761,createdT=1638711078735,startT=1638711078763,runningT=1638711078767,timeoutT=0,waitingT=1638711078764,failedT=0,successT=1638711078771,state=SUCCESS,failedDepends=[]], throwable=null)] to 2 children
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
+DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Delivering node[node-i1] result to child DagNode[node-s4, WAITING]
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=1
+DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Delivering node[node-i1] result to child DagNode[node-i2, WAITING]
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s4, WAITING], param depend expect=1, actual=1
+DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=1
+TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s4] state changed: WAITING -> RUNNING
 DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-i2, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i2] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] StringStrategy[s4:LOGIC] execute: params=[35960.526956650676]
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
-DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] DoubleStrategy[i2:LOGIC] execute: params=[35960.526956650676]
-WARN  [pool-2-thread-2] [c.d.s.StrategyBean] DoubleStrategy[i2:LOGIC] do [35960.526956650676] err: java.lang.RuntimeException: mock error for debug
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=0
-TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-i2] state changed: RUNNING -> FAILED
-DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Node[node-i2] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-i2,timeout=-1], trace=TraceInfo[waitingT=1638710384021,ineffectiveT=0,timeoutT=0,startT=1638710384021,runningT=1638710384025,failedT=1638710384026,preparedT=1638710384017,successT=0,createdT=1638710383994,state=FAILED,failedDepends=[]], throwable=java.lang.RuntimeException: mock error for debug)] to 1 children
-DEBUG [pool-2-thread-2] [c.d.d.DagScheduler] Delivering node[node-i2] failure to child DagNode[node-s6, WAITING]
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] StringStrategy[s4:LOGIC] do [35960.526956650676] to: 35960.526956650676+s4
-TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s4] state changed: RUNNING -> SUCCESS
-DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Node[node-s4] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s4,timeout=-1], trace=TraceInfo[waitingT=1638710384020,ineffectiveT=0,timeoutT=0,startT=1638710384020,runningT=1638710384025,failedT=0,preparedT=1638710384017,successT=1638710384026,createdT=1638710383993,state=SUCCESS,failedDepends=[]], throwable=null)] to 1 children
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
-DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-s4] result to child DagNode[node-s5, WAITING]
-DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=1
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=1
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s5] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-4] [c.d.s.StrategyBean] StringStrategy[s5:LOGIC] execute: params=[35960.526956650676+s4]
-DEBUG [pool-2-thread-4] [c.d.s.StrategyBean] StringStrategy[s5:LOGIC] do [35960.526956650676+s4] to: 35960.526956650676+s4+s5
-TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-s5] state changed: RUNNING -> SUCCESS
-DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Node[node-s5] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4+s5, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s5,timeout=-1], trace=TraceInfo[waitingT=1638710384022,ineffectiveT=0,timeoutT=0,startT=1638710384022,runningT=1638710384027,failedT=0,preparedT=1638710384017,successT=1638710384027,createdT=1638710383993,state=SUCCESS,failedDepends=[node-s3]], throwable=null)] to 1 children
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=0
-DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Delivering node[node-s5] result to child DagNode[node-s6, WAITING]
-DEBUG [pool-2-thread-4] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=1
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=1
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s6] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-3] [c.d.s.StrategyBean] StringStrategy[s6:LOGIC] execute: params=[35960.526956650676+s4+s5]
-DEBUG [pool-2-thread-3] [c.d.s.StrategyBean] StringStrategy[s6:LOGIC] do [35960.526956650676+s4+s5] to: 35960.526956650676+s4+s5+s6
-TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s6] state changed: RUNNING -> SUCCESS
-DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Node[node-s6] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4+s5+s6, info=DagNodeInfo[b2520d1130634b90bdd860f8ff9bcf73:node-s6,timeout=-1], trace=TraceInfo[waitingT=1638710384023,ineffectiveT=0,timeoutT=0,startT=1638710384023,runningT=1638710384028,failedT=0,preparedT=1638710384017,successT=1638710384028,createdT=1638710383993,state=SUCCESS,failedDepends=[node-s2,node-i2]], throwable=null)] to 1 children
-DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Delivering node[node-s6] result to child DagNode[node-final, WAITING]
-DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=1
-DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=1
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-final] state changed: WAITING -> RUNNING
-DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] FinalStrategy[final:FINAL] execute: params=[35960.526956650676+s4+s5+s6]
-DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] FinalStrategy[final:FINAL] do [35960.526956650676+s4+s5+s6] to: 35960.526956650676+s4+s5+s6
-TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-final] state changed: RUNNING -> SUCCESS
-TRACE [main] [c.d.d.Dag] onDagCompleted Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
-INFO  [main] [c.d.d.DagScheduler] DagScheduler done, graph=Dag[graphId=b2520d1130634b90bdd860f8ff9bcf73, nodeCount=10, edgeCount=12]
+TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-i2] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-4] [c.d.s.StrategyBean] DoubleStrategy[i2:LOGIC] execute: params=[35960.526956650676]
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-final] state changed: PREPARED -> START
+DEBUG [pool-2-thread-3] [c.d.s.StrategyBean] StringStrategy[s4:LOGIC] execute: params=[35960.526956650676]
+WARN  [pool-2-thread-4] [c.d.s.StrategyBean] DoubleStrategy[i2:LOGIC] do [35960.526956650676] err: java.lang.RuntimeException: mock error for debug
+TRACE [pool-2-thread-4] [c.d.d.Dag] Node[node-i2] state changed: RUNNING -> FAILED
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-final, START], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=0
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-final] state changed: START -> WAITING
+DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Node[node-i2] executed done, begin delivering execute result [DagNodeExecuteResult(result=null, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-i2,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078736,startT=1638711078763,runningT=1638711078772,timeoutT=0,waitingT=1638711078764,failedT=1638711078773,successT=0,state=FAILED,failedDepends=[]], throwable=java.lang.RuntimeException: mock error for debug)] to 1 children
+DEBUG [pool-2-thread-3] [c.d.s.StrategyBean] StringStrategy[s4:LOGIC] do [35960.526956650676] to: 35960.526956650676+s4
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
+DEBUG [pool-2-thread-4] [c.d.d.DagScheduler] Delivering node[node-i2] failure to child DagNode[node-s6, WAITING]
+TRACE [pool-2-thread-3] [c.d.d.Dag] Node[node-s4] state changed: RUNNING -> SUCCESS
+DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Node[node-s4] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s4,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078734,startT=1638711078763,runningT=1638711078772,timeoutT=0,waitingT=1638711078764,failedT=0,successT=1638711078773,state=SUCCESS,failedDepends=[]], throwable=null)] to 1 children
+DEBUG [pool-2-thread-3] [c.d.d.DagScheduler] Delivering node[node-s4] result to child DagNode[node-s5, WAITING]
+DEBUG [pool-2-thread-3] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=1
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s5, WAITING], param depend expect=2, actual=1
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s5] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] StringStrategy[s5:LOGIC] execute: params=[35960.526956650676+s4]
+DEBUG [pool-2-thread-5] [c.d.s.StrategyBean] StringStrategy[s5:LOGIC] do [35960.526956650676+s4] to: 35960.526956650676+s4+s5
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=0
+TRACE [pool-2-thread-5] [c.d.d.Dag] Node[node-s5] state changed: RUNNING -> SUCCESS
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Node[node-s5] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4+s5, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s5,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078764,createdT=1638711078735,startT=1638711078770,runningT=1638711078774,timeoutT=0,waitingT=1638711078770,failedT=0,successT=1638711078774,state=SUCCESS,failedDepends=[node-s3]], throwable=null)] to 1 children
+DEBUG [pool-2-thread-5] [c.d.d.DagScheduler] Delivering node[node-s5] result to child DagNode[node-s6, WAITING]
+DEBUG [pool-2-thread-5] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=1
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=0
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-s6, WAITING], param depend expect=3, actual=1
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s6] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] StringStrategy[s6:LOGIC] execute: params=[35960.526956650676+s4+s5]
+DEBUG [pool-2-thread-1] [c.d.s.StrategyBean] StringStrategy[s6:LOGIC] do [35960.526956650676+s4+s5] to: 35960.526956650676+s4+s5+s6
+TRACE [pool-2-thread-1] [c.d.d.Dag] Node[node-s6] state changed: RUNNING -> SUCCESS
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Node[node-s6] executed done, begin delivering execute result [DagNodeExecuteResult(result=35960.526956650676+s4+s5+s6, info=DagNodeInfo[e9c483b8652b42a69fe5dfbc60137a86:node-s6,timeout=-1], trace=TraceInfo[ineffectiveT=0,preparedT=1638711078764,createdT=1638711078735,startT=1638711078770,runningT=1638711078775,timeoutT=0,waitingT=1638711078771,failedT=0,successT=1638711078776,state=SUCCESS,failedDepends=[node-s2,node-i2]], throwable=null)] to 1 children
+DEBUG [pool-2-thread-1] [c.d.d.DagScheduler] Delivering node[node-s6] result to child DagNode[node-final, WAITING]
+DEBUG [pool-2-thread-1] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=1
+DEBUG [pool-2-thread-2] [c.d.d.DagNode] DagNode[node-final, WAITING], param depend expect=1, actual=1
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-final] state changed: WAITING -> RUNNING
+DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] FinalStrategy[final:FINAL] execute: params=[35960.526956650676+s4+s5+s6]
+DEBUG [pool-2-thread-2] [c.d.s.StrategyBean] FinalStrategy[final:FINAL] do [35960.526956650676+s4+s5+s6] to: 35960.526956650676+s4+s5+s6
+TRACE [pool-2-thread-2] [c.d.d.Dag] Node[node-final] state changed: RUNNING -> SUCCESS
+TRACE [main] [c.d.d.Dag] onDagCompleted Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
+INFO  [main] [c.d.d.DagScheduler] DagScheduler done, graph=Dag[graphId=e9c483b8652b42a69fe5dfbc60137a86, nodeCount=10, edgeCount=12]
 INFO  [main] [c.d.d.MainTest] ==========Dag HISTORY INFOS==========
-graphId=b2520d1130634b90bdd860f8ff9bcf73
+graphId=e9c483b8652b42a69fe5dfbc60137a86
+mode=SWITCH
 nodes:
 DagNode[node-root, SUCCESS] result: 你好，这是一条由RootStrategy生成的测试语句
-DagNode[node-s1, FAILED] result: null
-DagNode[node-s2, INEFFECTIVE] result: null
-DagNode[node-s3, INEFFECTIVE] result: null
 DagNode[node-i1, SUCCESS] result: 35960.526956650676
 DagNode[node-s4, SUCCESS] result: 35960.526956650676+s4
 DagNode[node-i2, FAILED] result: null
+DagNode[node-s1, FAILED] result: null
+DagNode[node-s3, INEFFECTIVE] result: null
+DagNode[node-s2, INEFFECTIVE] result: null
 DagNode[node-s5, SUCCESS] result: 35960.526956650676+s4+s5
 DagNode[node-s6, SUCCESS] result: 35960.526956650676+s4+s5+s6
 DagNode[node-final, SUCCESS] result: 35960.526956650676+s4+s5+s6
 traces:
-DagNode[node-root, SUCCESS] trace: TraceInfo[waitingT=0,ineffectiveT=0,timeoutT=0,startT=1638710384016,runningT=1638710384016,failedT=0,preparedT=1638710384000,successT=1638710384017,createdT=1638710383990,state=SUCCESS,failedDepends=[]]
-DagNode[node-s1, FAILED] trace: TraceInfo[waitingT=1638710384017,ineffectiveT=0,timeoutT=0,startT=1638710384016,runningT=1638710384019,failedT=1638710384021,preparedT=1638710384015,successT=0,createdT=1638710383992,state=FAILED,failedDepends=[]]
-DagNode[node-s2, INEFFECTIVE] trace: TraceInfo[waitingT=1638710384017,ineffectiveT=1638710384022,timeoutT=0,startT=1638710384016,runningT=0,failedT=0,preparedT=1638710384016,successT=0,createdT=1638710383992,state=INEFFECTIVE,failedDepends=[node-s1]]
-DagNode[node-s3, INEFFECTIVE] trace: TraceInfo[waitingT=1638710384017,ineffectiveT=1638710384021,timeoutT=0,startT=1638710384017,runningT=0,failedT=0,preparedT=1638710384016,successT=0,createdT=1638710383992,state=INEFFECTIVE,failedDepends=[node-s1]]
-DagNode[node-i1, SUCCESS] trace: TraceInfo[waitingT=1638710384017,ineffectiveT=0,timeoutT=0,startT=1638710384017,runningT=1638710384020,failedT=0,preparedT=1638710384016,successT=1638710384024,createdT=1638710383993,state=SUCCESS,failedDepends=[]]
-DagNode[node-s4, SUCCESS] trace: TraceInfo[waitingT=1638710384020,ineffectiveT=0,timeoutT=0,startT=1638710384020,runningT=1638710384025,failedT=0,preparedT=1638710384017,successT=1638710384026,createdT=1638710383993,state=SUCCESS,failedDepends=[]]
-DagNode[node-i2, FAILED] trace: TraceInfo[waitingT=1638710384021,ineffectiveT=0,timeoutT=0,startT=1638710384021,runningT=1638710384025,failedT=1638710384026,preparedT=1638710384017,successT=0,createdT=1638710383994,state=FAILED,failedDepends=[]]
-DagNode[node-s5, SUCCESS] trace: TraceInfo[waitingT=1638710384022,ineffectiveT=0,timeoutT=0,startT=1638710384022,runningT=1638710384027,failedT=0,preparedT=1638710384017,successT=1638710384027,createdT=1638710383993,state=SUCCESS,failedDepends=[node-s3]]
-DagNode[node-s6, SUCCESS] trace: TraceInfo[waitingT=1638710384023,ineffectiveT=0,timeoutT=0,startT=1638710384023,runningT=1638710384028,failedT=0,preparedT=1638710384017,successT=1638710384028,createdT=1638710383993,state=SUCCESS,failedDepends=[node-s2,node-i2]]
-DagNode[node-final, SUCCESS] trace: TraceInfo[waitingT=1638710384025,ineffectiveT=0,timeoutT=0,startT=1638710384025,runningT=1638710384029,failedT=0,preparedT=1638710384017,successT=1638710384029,createdT=1638710383990,state=SUCCESS,failedDepends=[]]
+DagNode[node-root, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078742,createdT=1638711078729,startT=1638711078761,runningT=1638711078763,timeoutT=0,waitingT=0,failedT=0,successT=1638711078764,state=SUCCESS,failedDepends=[]]
+DagNode[node-i1, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078761,createdT=1638711078735,startT=1638711078763,runningT=1638711078767,timeoutT=0,waitingT=1638711078764,failedT=0,successT=1638711078771,state=SUCCESS,failedDepends=[]]
+DagNode[node-s4, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078734,startT=1638711078763,runningT=1638711078772,timeoutT=0,waitingT=1638711078764,failedT=0,successT=1638711078773,state=SUCCESS,failedDepends=[]]
+DagNode[node-i2, FAILED] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078736,startT=1638711078763,runningT=1638711078772,timeoutT=0,waitingT=1638711078764,failedT=1638711078773,successT=0,state=FAILED,failedDepends=[]]
+DagNode[node-s1, FAILED] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078762,createdT=1638711078733,startT=1638711078764,runningT=1638711078768,timeoutT=0,waitingT=1638711078764,failedT=1638711078768,successT=0,state=FAILED,failedDepends=[]]
+DagNode[node-s3, INEFFECTIVE] trace: TraceInfo[ineffectiveT=1638711078770,preparedT=1638711078764,createdT=1638711078734,startT=1638711078767,runningT=0,timeoutT=0,waitingT=1638711078767,failedT=0,successT=0,state=INEFFECTIVE,failedDepends=[node-s1]]
+DagNode[node-s2, INEFFECTIVE] trace: TraceInfo[ineffectiveT=1638711078769,preparedT=1638711078764,createdT=1638711078734,startT=1638711078769,runningT=0,timeoutT=0,waitingT=0,failedT=0,successT=0,state=INEFFECTIVE,failedDepends=[node-s1]]
+DagNode[node-s5, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078764,createdT=1638711078735,startT=1638711078770,runningT=1638711078774,timeoutT=0,waitingT=1638711078770,failedT=0,successT=1638711078774,state=SUCCESS,failedDepends=[node-s3]]
+DagNode[node-s6, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078764,createdT=1638711078735,startT=1638711078770,runningT=1638711078775,timeoutT=0,waitingT=1638711078771,failedT=0,successT=1638711078776,state=SUCCESS,failedDepends=[node-s2,node-i2]]
+DagNode[node-final, SUCCESS] trace: TraceInfo[ineffectiveT=0,preparedT=1638711078764,createdT=1638711078731,startT=1638711078772,runningT=1638711078776,timeoutT=0,waitingT=1638711078773,failedT=0,successT=1638711078776,state=SUCCESS,failedDepends=[]]
 =====================================
 Result:
 35960.526956650676+s4+s5+s6
 INFO  [main] [c.d.d.MainTest] ==========DAG GRAPH ADJACENCY MATRIX INFOS==========
 nodes:
-(0)node-s1, (1)node-s6, (2)node-s4, (3)node-i2, (4)node-root, (5)node-s5, (6)node-final, (7)node-s2, (8)node-s3, (9)node-i1
+(0)node-s3, (1)node-i1, (2)node-final, (3)node-s2, (4)node-s5, (5)node-root, (6)node-s4, (7)node-i2, (8)node-s6, (9)node-s1
 ----------------------------------------------------
 matrix:
-(0): [0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-(1): [0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
-(2): [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
-(3): [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-(4): [1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-(5): [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-(6): [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-(7): [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-(8): [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
-(9): [0, 0, 1, 1, 0, 0, 0, 0, 0, 0]
+(0): [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+(1): [0, 0, 0, 0, 0, 0, 1, 1, 0, 0]
+(2): [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+(3): [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+(4): [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+(5): [0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+(6): [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+(7): [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+(8): [0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+(9): [1, 0, 0, 1, 0, 0, 0, 0, 0, 0]

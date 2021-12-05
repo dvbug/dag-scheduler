@@ -97,14 +97,14 @@ public final class DagScheduler {
     }
 
     public String dumpHistory(Dag<?> graph) {
-        return buildLog(String.format("%s HISTORY", graph.getClass().getSimpleName()), graph.getGraphId(), executedHistory, graph.getOutput());
+        return buildLog(String.format("%s HISTORY", graph.getClass().getSimpleName()), graph.getGraphId(), graph.getMode(), executedHistory, graph.getOutput());
     }
 
     private String dumpSnapshot(Dag<?> graph) {
-        return buildLog(String.format("%s SNAPSHOT", graph.getClass().getSimpleName()), graph.getGraphId(), graph.getDagNodes(), graph.getOutput());
+        return buildLog(String.format("%s SNAPSHOT", graph.getClass().getSimpleName()), graph.getGraphId(), graph.getMode(), graph.getDagNodes(), graph.getOutput());
     }
 
-    private String buildLog(String marker, String graphId, Collection<DagNode<?>> nodes, Object result) {
+    private String buildLog(String marker, String graphId, DagMode mode, Collection<DagNode<?>> nodes, Object result) {
         StringBuilder builder = new StringBuilder();
         String title = String.format("%s INFOS", marker);
         title = Util.covering(title, title.length() + 10, "=", true);
@@ -112,6 +112,7 @@ public final class DagScheduler {
         int len = title.length();
         builder.append(title).append("\n");
         builder.append("graphId=").append(graphId).append("\n");
+        builder.append("mode=").append(mode).append("\n");
         builder.append("nodes:\n");
         nodes.forEach(t -> {
             builder.append(t.toString());
