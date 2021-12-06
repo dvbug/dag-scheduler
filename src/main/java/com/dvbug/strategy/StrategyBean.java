@@ -1,10 +1,9 @@
 package com.dvbug.strategy;
 
 import com.dvbug.dag.NodeBean;
-import lombok.AccessLevel;
+import com.dvbug.dag.ThreadableField;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -19,33 +18,57 @@ import java.util.stream.Collectors;
  * @param <R> 策略输出结果类型
  */
 @Slf4j
-@Getter
-@Setter
 @RequiredArgsConstructor
 public abstract class StrategyBean<R> implements NodeBean<R> {
+    @Getter
     private final String name;
+    @Getter
     private final StrategyType type;
-    private R result;
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private boolean isSetResult = false;
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private boolean isSetError = false;
-    private Throwable throwable;
-    @Setter(AccessLevel.NONE)
-    private List<Object> params = new ArrayList<>();
-    private final Object lockObj = new Object();
+    private final ThreadableField<R> result = new ThreadableField<>();
+    private final ThreadableField<Boolean> isSetResult = new ThreadableField<>(false);
+    private final ThreadableField<Boolean> isSetError = new ThreadableField<>(false);
+    private final ThreadableField<Throwable> throwable = new ThreadableField<>();
+    private final ThreadableField<List<Object>> params = new ThreadableField<>(new ArrayList<>());
+
+    @Override
+    public void beforeRuntime() {
+        this.result.beforeRuntime();
+        this.isSetResult.beforeRuntime();
+        this.isSetError.beforeRuntime();
+        this.throwable.beforeRuntime();
+        this.params.beforeRuntime();
+    }
+
+    @Override
+    public void afterRuntime() {
+        this.result.afterRuntime();
+        this.isSetResult.afterRuntime();
+        this.isSetError.afterRuntime();
+        this.throwable.afterRuntime();
+        this.params.afterRuntime();
+    }
+
+    @Override
+    public void reset() {
+        this.result.reset();
+        this.isSetResult.reset();
+        this.isSetError.reset();
+        this.throwable.reset();
+        this.params.reset();
+
+        this.isSetResult.set(false);
+        this.isSetError.set(false);
+        this.params.set(new ArrayList<>());
+    }
 
     public final boolean execute() {
-        synchronized (lockObj) {
-            params = params.stream().sorted(Comparator.comparing(Objects::hashCode)).collect(Collectors.toList());
-        }
+        params.set(params.get().stream().sorted(Comparator.comparing(Objects::hashCode)).collect(Collectors.toList()));
+
         log.debug("{} execute: params={}", this, getParams());
         try {
-            boolean ok = executeAble() && doExecute();
+            boolean ok = executeEnable() && doExecute();
             if (ok) {
-                if (isSetResult) {
+                if (isSetResult.get()) {
                     unsetThrowable();
                 } else {
                     log.error("{}.doExecute() returns true, but without any result, please invoke setResult(result)", this.getClass().getSimpleName());
@@ -54,7 +77,7 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
                 }
             } else {
                 unsetResult();
-                if (!isSetError) {
+                if (!isSetError.get()) {
                     setThrowable(new IllegalStateException(String.format("%s throwable is not set", this.getClass().getSimpleName())));
                 }
             }
@@ -64,7 +87,7 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
             setThrowable(e);
             return false;
         } finally {
-            if (null == throwable) {
+            if (null == throwable.get()) {
                 log.debug("{} do {} to: {}", this, getParams(), getResult());
             } else {
                 log.warn("{} do {} err: {}", this, getParams(), getThrowable());
@@ -79,8 +102,8 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
      * @param result {@link R}的实例
      */
     public void setResult(R result) {
-        this.result = result;
-        this.isSetResult = true;
+        this.result.set(result);
+        this.isSetResult.set(true);
     }
 
     /**
@@ -90,12 +113,12 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
      * @param throwable {@link Throwable}的实例
      */
     public void setThrowable(Throwable throwable) {
-        this.throwable = throwable;
-        this.isSetError = true;
+        this.throwable.set(throwable);
+        this.isSetError.set(true);
     }
 
-    public final boolean executeAble() {
-        return (!params.isEmpty()) && canExecute();
+    public final boolean executeEnable() {
+        return (!params.get().isEmpty()) && canExecute();
     }
 
     /**
@@ -120,9 +143,15 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
      */
     public abstract boolean canExecute();
 
+    public void onBeforeRuntime() {
+    }
+
+    public void onAfterRuntime() {
+    }
+
     @Override
     public void setParam(Object param) {
-        this.params.add(param);
+        this.params.get().add(param);
     }
 
     @Override
@@ -137,7 +166,21 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
 
     @Override
     public int getParamCount() {
-        return this.params.size();
+        return this.params.get().size();
+    }
+
+    public List<Object> getParams() {
+        return params.get();
+    }
+
+    @Override
+    public R getResult() {
+        return result.get();
+    }
+
+    @Override
+    public Throwable getThrowable() {
+        return throwable.get();
     }
 
     @Override
@@ -159,12 +202,12 @@ public abstract class StrategyBean<R> implements NodeBean<R> {
     }
 
     private void unsetResult() {
-        this.isSetResult = false;
-        this.result = null;
+        this.isSetResult.reset();
+        this.result.reset();
     }
 
     private void unsetThrowable() {
-        this.isSetError = false;
-        this.throwable = null;
+        this.isSetError.reset();
+        this.throwable.reset();
     }
 }

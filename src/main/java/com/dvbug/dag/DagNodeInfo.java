@@ -14,17 +14,21 @@ import java.util.Objects;
 public class DagNodeInfo {
     private String graphId;
     private DagMode mode;
+    private long timeout;
     private final String name;
-    private final long timeout;
+    private final boolean isRoot;
+    private final boolean isFinal;
 
-    public DagNodeInfo(String name, long timeout) {
+    public DagNodeInfo(String name, long timeout, boolean isRoot, boolean isFinal) {
         this.name = name;
         this.timeout = timeout;
+        this.isRoot = isRoot;
+        this.isFinal = isFinal;
     }
 
     @Override
     public String toString() {
-        return String.format("%s[%s:%s,timeout=%s]", DagNodeInfo.class.getSimpleName(), graphId, name, timeout);
+        return String.format("%s[%s:%s,timeout=%s,isRoot=%s,isFinal=%s]", DagNodeInfo.class.getSimpleName(), graphId, name, timeout, isRoot, isFinal);
     }
 
     @Override

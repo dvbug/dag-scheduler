@@ -38,3 +38,7 @@
 - 需要调整Dag和DagNode的状态，将图结构变为“静态”。
   将调度的“动态”与图结构的“静态”解耦并隔离调度上下文信息，
   以此来支持多线程环境下单一Dag图对象实例的重复并发调度。
+  - 设计[RuntimeInitializable.java](./src/main/java/com/dvbug/dag/RuntimeInitializable.java)接口提供调度运行时初始化线程上下文。
+  - 基于`ThreadLocal`封装了[ThreadableField.java](./src/main/java/com/dvbug/dag/ThreadableField.java)实现，将需要线程化的字段包装进去。
+  - 已经支持线程循环并发调度  
+  - `DagNode`的`trace`存在bug，待修改

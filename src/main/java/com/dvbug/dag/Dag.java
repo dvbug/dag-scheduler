@@ -19,8 +19,9 @@ import static com.dvbug.dag.DagStateTransition.transAllow;
 public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
     private final DagMode mode;
     private final String graphId;
+    private final long timeout;
     @Getter(AccessLevel.NONE)
-    private DagState state;
+    private final ThreadableField<DagState> state = new ThreadableField<>();
     private int edgeCount = 0;
     private DagNode<? extends NodeBean<?>> rootDagNode;
     private DagNode<? extends NodeBean<?>> finalDagNode;
@@ -35,45 +36,59 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
      * @param mode DAG图模式
      */
     public Dag(DagMode mode) {
-        this(mode, null);
+        this(mode, -1, null);
+    }
+
+    /**
+     * 创建指定模式的DAG图
+     *
+     * @param mode    DAG图模式
+     * @param timeout 节点超时毫秒数(不代表整体超时数)
+     */
+    public Dag(DagMode mode, long timeout) {
+        this(mode, timeout, null);
     }
 
     /**
      * 创建指定模式的DAG图并指定事件监听器
      *
      * @param mode         DAG图模式
+     * @param timeout      节点超时毫秒数(不代表整体超时数)
      * @param eventHandler DAG图生命周期内事件监听器
      */
-    public Dag(DagMode mode, DagEventHandler eventHandler) {
-        this(mode, null, null, eventHandler);
+    public Dag(DagMode mode, long timeout, DagEventHandler eventHandler) {
+        this(mode, timeout, null, null, eventHandler);
     }
 
     /**
      * 创建指定模式的DAG图并指定起始输入参数类型和最终输出参数类型
      *
      * @param mode       DAG图模式
+     * @param timeout    节点超时毫秒数(不代表整体超时数)
      * @param inputType  起始输入参数类型
      * @param resultType 最终输出参数类型
      */
-    public Dag(DagMode mode, Class<?> inputType, Class<R> resultType) {
-        this(mode, inputType, resultType, null);
+    public Dag(DagMode mode, long timeout, Class<?> inputType, Class<R> resultType) {
+        this(mode, timeout, inputType, resultType, null);
     }
 
     /**
      * 创建指定模式的DAG图并指定起始输入参数类型、最终输出参数类型和事件监听器
      *
      * @param mode         DAG图模式
+     * @param timeout      节点超时毫秒数(不代表整体超时数)
      * @param inputType    起始输入参数类型
      * @param resultType   最终输出参数类型
      * @param eventHandler DAG图生命周期内事件监听器
      */
-    public Dag(DagMode mode, Class<?> inputType, Class<R> resultType, DagEventHandler eventHandler) {
-        this(UUID.randomUUID().toString().replaceAll("-", ""), mode, inputType, resultType, eventHandler);
+    public Dag(DagMode mode, long timeout, Class<?> inputType, Class<R> resultType, DagEventHandler eventHandler) {
+        this(UUID.randomUUID().toString().replaceAll("-", ""), mode, timeout, inputType, resultType, eventHandler);
     }
 
-    private Dag(String graphId, DagMode mode, Class<?> inputType, Class<R> resultType, DagEventHandler eventHandler) {
+    private Dag(String graphId, DagMode mode, long timeout, Class<?> inputType, Class<R> resultType, DagEventHandler eventHandler) {
         this.mode = mode;
         this.graphId = graphId;
+        this.timeout = timeout;
         this.dagNodes = new HashSet<>();
         this.depends = new HashMap<>();
         this.children = new HashMap<>();
@@ -121,7 +136,7 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
             finalDagNode = dagNode;
         }
 
-        dagNode.init(graphId, mode, this);
+        dagNode.init(this);
         dagNodes.add(dagNode);
 
         setState(DagState.INITIALIZING);
@@ -175,7 +190,7 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
     }
 
     public R getOutput() {
-        return (R) getFinalDagNode().getBean().getResult();
+        return (R) getFinalDagNode().getTrace().getFinalResult();
     }
 
     public boolean remove(DagNode<? extends NodeBean<?>> dagNode) {
@@ -203,8 +218,11 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
     }
 
     // 由 DAG调度器调用
-    void setPrepared() {
-        getDagNodes().forEach(t -> t.setStateChanged(this));
+    void setPrepared(String traceId) {
+        getDagNodes().forEach(t -> {
+            t.getTrace().setId(traceId);
+            t.setStateChangedHandler(this);
+        });
         setState(DagState.PREPARED);
     }
 
@@ -216,6 +234,10 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
     // 由 DAG调度器调用
     void setCompleted() {
         setState(DagState.COMPLETED);
+
+        //reset
+        this.state.reset();
+        this.dagNodes.forEach(DagNode::reset);
     }
 
     // 由 DAG调度器调用
@@ -224,16 +246,20 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
     }
 
     private void setState(DagState state) {
-        if (null != this.state && this.state.equals(state)) {
+        if (null != this.getState() && this.getState().equals(state)) {
             return;
         }
-        DagState oldState = this.state;
+        DagState oldState = this.getState();
         if (!transAllow(oldState, state)) {
             return;
         }
-        this.state = state;
+        this.state.set(state);
 
         raiseEventOnStateChanged(state);
+    }
+
+    private DagState getState() {
+        return state.get();
     }
 
     private void raiseEventOnStateChanged(DagState state) {
@@ -351,5 +377,36 @@ public class Dag<R> implements DagEventHandler, DagNodeStateChanged {
 
     private static String edgeName(@NonNull DagNode<? extends NodeBean<?>> from, @NonNull DagNode<? extends NodeBean<?>> to) {
         return String.format("%s->%s", from.getInfo().getName(), to.getInfo().getName());
+    }
+
+    public String dumpSnapshot() {
+        return buildLog(String.format("%s SNAPSHOT", this.getClass().getSimpleName()), this.getGraphId(), this.getMode(), this.getDagNodes(), this.getOutput());
+    }
+
+    private String buildLog(String marker, String graphId, DagMode mode, Collection<DagNode<?>> nodes, Object result) {
+        StringBuilder builder = new StringBuilder();
+        String title = String.format("%s INFOS", marker);
+        title = Util.covering(title, title.length() + 10, "=", true);
+        title = Util.covering(title, title.length() + 10, "=", false);
+        int len = title.length();
+        builder.append(title).append("\n");
+        builder.append("graphId=").append(graphId).append("\n");
+        builder.append("mode=").append(mode).append("\n");
+        builder.append("nodes:\n");
+        nodes.forEach(t -> {
+            builder.append(t.toString());
+            if (t.isFinished()) {
+                builder.append(" result: ").append(t.getBean().getResult());
+            }
+            builder.append("\n");
+        });
+        builder.append("traces:\n");
+        nodes.forEach(t -> {
+            builder.append(t.toString()).append(" trace: ").append(t.getTrace()).append("\n");
+        });
+        builder.append(Util.repeat("=", len)).append("\n");
+        builder.append("Result:\n");
+        builder.append(result);
+        return builder.toString();
     }
 }

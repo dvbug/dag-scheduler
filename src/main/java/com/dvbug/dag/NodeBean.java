@@ -3,13 +3,27 @@ package com.dvbug.dag;
 /**
  * DAG节点内连Bean对象
  */
-public interface NodeBean<T> {
+public interface NodeBean<T> extends RuntimeInitializable {
 
     boolean isRoot();
 
     boolean isFinal();
 
     String getName();
+
+    /**
+     * 对象声明周期激活,此时对象运行时的线程已经确定
+     * 可以在此进行一些线程相关的初始化工作
+     * 在{@link NodeBean#execute()}和{@link NodeBean#executeEnable()}方法调用前被执行
+     */
+    void beforeRuntime();
+
+    /**
+     * 对象声明周期即将结束
+     * 可以在此进行一些线程相关的资源释放工作
+     * 方法被调用在{@link NodeBean#execute()}结束之后
+     */
+    void afterRuntime();
 
     /**
      * 业务方关注<br/>
@@ -28,7 +42,7 @@ public interface NodeBean<T> {
      * 内连Bean对象是否可以执行{@link NodeBean#execute()}方法<br/>
      * 通常在本方法内部进行可执行的参数和条件是否满足<br/>
      */
-    boolean executeAble();
+    boolean executeEnable();
 
 
     /**
